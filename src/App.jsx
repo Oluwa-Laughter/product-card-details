@@ -6,39 +6,64 @@ import { useEffect, useState } from "react";
 
 export default function App() {
   const [newProductData, setNewProductData] = useState([]);
-  const [orderConfirm, setOrderConfirm] = useState(false);
-
-  const handleDelete = (id) => {
-    const deleteItem = newProductData.filter((item) => item.id !== id);
-    setNewProductData(deleteItem);
-  };
 
   useEffect(() => {
     const updateData = data.map((item, index) => ({
       ...item,
-      order: 0,
       id: index,
+      order: 0,
     }));
     setNewProductData(updateData);
   }, []);
 
-  const addOrder = (index) => {
-    const addItem = newProductData.map((item, i) => {
-      if (i === index) {
+  const addOrder = (id, quantity) => {
+    const updateItem = newProductData.map((item) => {
+      if (item.id === id) {
         return {
           ...item,
-          order: item.order + 1,
+          order: quantity,
         };
       }
       return item;
     });
 
-    setNewProductData(addItem);
+    setNewProductData(updateItem);
+  };
+
+  const removeOrder = (id, quantity) => {
+    const updateItem = newProductData.map((item) => {
+      if (item.id === id) {
+        return {
+          ...item,
+          order: quantity,
+        };
+      }
+      return item;
+    });
+    setNewProductData(updateItem);
+  };
+
+  const handleDelete = (id) => {
+    const updatedData = newProductData.map((item) => {
+      if (item.id === id) {
+        return {
+          ...item,
+          order: 0,
+        };
+      }
+      return item;
+    });
+    setNewProductData(updatedData);
   };
 
   return (
     <Container>
-      <ProductContainer newProductData={newProductData} addOrder={addOrder} />
+      <ProductContainer
+        newProductData={newProductData}
+        addOrder={addOrder}
+        removeOrder={removeOrder}
+        onDelete={handleDelete}
+      />
       <SideBar onDelete={handleDelete} newProductData={newProductData} />
     </Container>
   );
@@ -47,7 +72,7 @@ export default function App() {
 const Container = styled.section`
   padding: 6rem;
   max-width: 130rem;
-  margin: 5rem auto;
+  margin: 1rem auto;
   display: grid;
   grid-template-columns: 3fr 1fr;
   gap: 3rem;

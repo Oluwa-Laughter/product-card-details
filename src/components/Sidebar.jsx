@@ -6,6 +6,11 @@ export default function SideBar({ newProductData, onDelete }) {
     (price, item) => price + item.price * item.order,
     0
   );
+
+  const handleDelete = (id) => {
+    onDelete(id);
+  };
+
   return (
     <Cart>
       <h2>Your Card ({cartItems.length})</h2>
@@ -28,7 +33,7 @@ export default function SideBar({ newProductData, onDelete }) {
                   </p>
                 </figure>
 
-                <button onClick={() => onDelete(item.id)}>
+                <button onClick={() => handleDelete(item.id)}>
                   <img src="/images/icon-remove-item.svg" alt="remove" />
                 </button>
               </li>
