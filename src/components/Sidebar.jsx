@@ -1,59 +1,53 @@
 import styled from "styled-components";
 
-export default function SideBar() {
+export default function SideBar({ newProductData, onDelete }) {
+  const cartItems = newProductData.filter((item) => item.order > 0);
+  const totalAmount = cartItems.reduce(
+    (price, item) => price + item.price * item.order,
+    0
+  );
   return (
     <Cart>
-      <h2>Your Card (0)</h2>
+      <h2>Your Card ({cartItems.length})</h2>
+      {cartItems.length === 0 ? (
+        <div>
+          <img src="/images/illustration-empty-cart.svg" alt="" />
+          <p>Your added items will appear here</p>
+        </div>
+      ) : (
+        <>
+          <ul>
+            {cartItems.map((item) => (
+              <li key={item.id}>
+                <figure>
+                  <p>{item.name}</p>
+                  <p>
+                    <span>{item.order}X</span>
+                    <span>@ ${item.price.toFixed(2)}</span>
+                    <span>${(item.order * item.price).toFixed(2)}</span>
+                  </p>
+                </figure>
 
-      <div>
-        <img src="/images/illustration-empty-cart.svg" alt="" />
-        <p>Your added items will appear here</p>
-      </div>
+                <button onClick={() => onDelete(item.id)}>
+                  <img src="/images/icon-remove-item.svg" alt="remove" />
+                </button>
+              </li>
+            ))}
+          </ul>
 
-      {/*  <h2>Your Card (7)</h2>
-     <ul>
-        <li>
-          <figure>
-            <p>Classic Tiramisu</p>
-            <p>
-              <span>1X</span>
-              <span>@ $5.50</span>
-              <span>$5.50</span>
-            </p>
-          </figure>
+          <Total>
+            <p>Order Total</p>
+            <h4>${totalAmount.toFixed(2)}</h4>
+          </Total>
 
-          <button>
-            <img src="/images/icon-remove-item.svg" alt="remove" />
-          </button>
-        </li>
+          <Carbon>
+            <img src="/images/icon-carbon-neutral.svg" alt="carbon-icon" /> This
+            is a carbon-neutral delivery
+          </Carbon>
 
-        <li>
-          <figure>
-            <p>Classic Tiramisu</p>
-            <p>
-              <span>1X</span>
-              <span>@ $5.50</span>
-              <span>$5.50</span>
-            </p>
-          </figure>
-
-          <button>
-            <img src="/images/icon-remove-item.svg" alt="remove" />
-          </button>
-        </li>
-      </ul>
-
-      <Total>
-        <p>Order Total</p>
-        <h4>$46.50</h4>
-      </Total>
-
-      <Carbon>
-        <img src="/images/icon-carbon-neutral.svg" alt="carbon-icon" /> This is
-        a carbon-neutral delivery
-      </Carbon>
-
-      <ConfirmBtn>Confirm Order</ConfirmBtn> */}
+          <ConfirmBtn>Confirm Order</ConfirmBtn>
+        </>
+      )}
     </Cart>
   );
 }

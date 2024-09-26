@@ -2,14 +2,44 @@ import styled from "styled-components";
 import SideBar from "./components/Sidebar.jsx";
 import data from "../data.json";
 import ProductContainer from "./components/ProductContainer.jsx";
-// import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function App() {
-  const productData = data;
+  const [newProductData, setNewProductData] = useState([]);
+  const [orderConfirm, setOrderConfirm] = useState(false);
+
+  const handleDelete = (id) => {
+    const deleteItem = newProductData.filter((item) => item.id !== id);
+    setNewProductData(deleteItem);
+  };
+
+  useEffect(() => {
+    const updateData = data.map((item, index) => ({
+      ...item,
+      order: 0,
+      id: index,
+    }));
+    setNewProductData(updateData);
+  }, []);
+
+  const addOrder = (index) => {
+    const addItem = newProductData.map((item, i) => {
+      if (i === index) {
+        return {
+          ...item,
+          order: item.order + 1,
+        };
+      }
+      return item;
+    });
+
+    setNewProductData(addItem);
+  };
+
   return (
     <Container>
-      <ProductContainer data={productData} />
-      <SideBar />
+      <ProductContainer newProductData={newProductData} addOrder={addOrder} />
+      <SideBar onDelete={handleDelete} newProductData={newProductData} />
     </Container>
   );
 }

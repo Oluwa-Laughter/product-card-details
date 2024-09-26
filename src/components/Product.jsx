@@ -1,19 +1,19 @@
 import styled from "styled-components";
 
-export default function Product({ items }) {
-  const handleFlip = () => {};
+export default function Product({ item, addOrder }) {
+  console.log(item);
   return (
     <Card>
-      <img src={items.image.desktop} alt="" />
-      <button onClick={handleFlip}>
+      <img src={item.image.desktop} alt="" />
+      <button onClick={addOrder}>
         <img src="/images/icon-add-to-cart.svg" alt="add to cart" />
         <span>Add to Cart</span>
       </button>
 
       <figure>
-        <p>{items.category}</p>
-        <h3>{items.name}</h3>
-        <span>${items.price}</span>
+        <p>{item.category}</p>
+        <h3>{item.name}</h3>
+        <span>${item.price}</span>
       </figure>
     </Card>
   );

@@ -1,14 +1,14 @@
 import styled from "styled-components";
 import Product from "./Product.jsx";
 
-export default function ProductContainer({ data }) {
-  console.log(data);
+export default function ProductContainer({ newProductData, addOrder }) {
+  console.log(newProductData);
   return (
     <Container>
       <h1>Desserts</h1>
       <ProductList>
-        {data.map((data) => (
-          <Product items={data} key={data.name} />
+        {newProductData.map((item, index) => (
+          <Product item={item} addOrder={() => addOrder(index)} key={item.id} />
         ))}
       </ProductList>
     </Container>
