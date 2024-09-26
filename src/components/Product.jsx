@@ -35,7 +35,7 @@ export default function Product({ items, onAddOrder, onRemoveOrder }) {
   };
 
   return (
-    <ProductCard isInCart={isInCart}>
+    <ProductCard className={isInCart ? "in-cart" : ""}>
       <img src={items.image.desktop} alt="" />
       {quantity === 0 ? (
         <button onClick={handleAddOrder}>
@@ -78,7 +78,11 @@ const ProductCard = styled.li`
     width: 100%;
     border-radius: 9px;
     overflow: hidden;
-    border: ${(props) => (props.isInCart ? "3px solid var(--Red)" : "none")};
+    transition: border 0.3s ease;
+  }
+
+  &.in-cart img {
+    border: 3px solid var(--Red);
   }
 
   button {
@@ -86,17 +90,17 @@ const ProductCard = styled.li`
     align-items: center;
     border: ${(props) =>
       props.isInCart ? "none" : "1px solid var(--Rose-300)"};
-    gap: 1.4rem;
+    justify-content: space-between;
+    width: 15rem;
     border-radius: 2.4rem;
     padding: 0.8rem 2rem;
-    background: ${(props) =>
-      props.isInCart ? "var(--Red)" : "var(--Rose-50)"};
+    background: var(--Rose-50);
     position: absolute;
     bottom: 27%;
     z-index: 999;
-    right: 25%;
+    right: 23%;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.3s ease-in-out;
     &:hover {
       border: 1px solid var(--Red);
       color: var(--Red);
@@ -122,7 +126,15 @@ const ProductCard = styled.li`
 
     span {
       font-size: 1.4rem;
-      color: ${(props) => (props.isInCart ? "var(--Rose-50)" : "var(--Red)")};
+      color: var(--Red);
+    }
+  }
+
+  &.in-cart button {
+    background: var(--Red);
+
+    span {
+      color: var(--Rose-50);
     }
   }
 

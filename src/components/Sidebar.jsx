@@ -1,11 +1,22 @@
 import styled from "styled-components";
+import ConfirmOrder from "./ConfirmOrder.jsx";
+import { useState } from "react";
 
 export default function SideBar({ newProductData, onDelete }) {
   const cartItems = newProductData.filter((item) => item.order > 0);
+
   const totalAmount = cartItems.reduce(
     (price, item) => price + item.price * item.order,
     0
   );
+
+  const [showComplete, setShowComplete] = useState(false);
+
+  console.log(cartItems);
+
+  const handleComplete = () => {
+    setShowComplete(true);
+  };
 
   const handleDelete = (id) => {
     onDelete(id);
@@ -50,7 +61,10 @@ export default function SideBar({ newProductData, onDelete }) {
             is a carbon-neutral delivery
           </Carbon>
 
-          <ConfirmBtn>Confirm Order</ConfirmBtn>
+          <ConfirmBtn onClick={handleComplete}>Confirm Order</ConfirmBtn>
+          {showComplete && (
+            <ConfirmOrder cartItems={cartItems} totalAmount={totalAmount} />
+          )}
         </>
       )}
     </Cart>
