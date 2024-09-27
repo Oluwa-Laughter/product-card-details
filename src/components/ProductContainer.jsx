@@ -6,7 +6,6 @@ export default function ProductContainer({
   addOrder,
   removeOrder,
 }) {
-  console.log(newProductData);
   return (
     <Container>
       <h1>Desserts</h1>

@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import ConfirmOrder from "./ConfirmOrder.jsx";
-import { useState } from "react";
 
 export default function SideBar({
   newProductData,
@@ -15,8 +14,6 @@ export default function SideBar({
     (price, item) => price + item.price * item.order,
     0
   );
-
-  console.log(cartItems);
 
   const handleDelete = (id) => {
     onDelete(id);
