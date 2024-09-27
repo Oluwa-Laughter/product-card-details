@@ -7,6 +7,12 @@ import { useEffect, useState } from "react";
 export default function App() {
   const [newProductData, setNewProductData] = useState([]);
 
+  const [showComplete, setShowComplete] = useState(false);
+
+  const handleComplete = () => {
+    setShowComplete(true);
+  };
+
   useEffect(() => {
     const updateData = data.map((item, index) => ({
       ...item,
@@ -56,6 +62,16 @@ export default function App() {
     setNewProductData(updatedData);
   };
 
+  const resetCart = () => {
+    const updateData = data.map((item, index) => ({
+      ...item,
+      id: index,
+      order: 0,
+    }));
+    setNewProductData(updateData);
+    setShowComplete(false);
+  };
+
   return (
     <Container>
       <ProductContainer
@@ -64,7 +80,13 @@ export default function App() {
         removeOrder={removeOrder}
         onDelete={handleDelete}
       />
-      <SideBar onDelete={handleDelete} newProductData={newProductData} />
+      <SideBar
+        onDelete={handleDelete}
+        onComplete={handleComplete}
+        onResetCart={resetCart}
+        newProductData={newProductData}
+        showComplete={showComplete}
+      />
     </Container>
   );
 }

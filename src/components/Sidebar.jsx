@@ -2,7 +2,13 @@ import styled from "styled-components";
 import ConfirmOrder from "./ConfirmOrder.jsx";
 import { useState } from "react";
 
-export default function SideBar({ newProductData, onDelete }) {
+export default function SideBar({
+  newProductData,
+  onDelete,
+  onComplete,
+  onResetCart,
+  showComplete,
+}) {
   const cartItems = newProductData.filter((item) => item.order > 0);
 
   const totalAmount = cartItems.reduce(
@@ -10,13 +16,7 @@ export default function SideBar({ newProductData, onDelete }) {
     0
   );
 
-  const [showComplete, setShowComplete] = useState(false);
-
   console.log(cartItems);
-
-  const handleComplete = () => {
-    setShowComplete(true);
-  };
 
   const handleDelete = (id) => {
     onDelete(id);
@@ -61,9 +61,13 @@ export default function SideBar({ newProductData, onDelete }) {
             is a carbon-neutral delivery
           </Carbon>
 
-          <ConfirmBtn onClick={handleComplete}>Confirm Order</ConfirmBtn>
+          <ConfirmBtn onClick={onComplete}>Confirm Order</ConfirmBtn>
           {showComplete && (
-            <ConfirmOrder cartItems={cartItems} totalAmount={totalAmount} />
+            <ConfirmOrder
+              cartItems={cartItems}
+              handleResetCart={onResetCart}
+              totalAmount={totalAmount}
+            />
           )}
         </>
       )}

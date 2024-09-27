@@ -1,7 +1,10 @@
-import { useState } from "react";
 import styled from "styled-components";
 
-export default function ConfirmOrder({ cartItems, totalAmount }) {
+export default function ConfirmOrder({
+  cartItems,
+  handleResetCart,
+  totalAmount,
+}) {
   return (
     <Container>
       <Content>
@@ -35,7 +38,7 @@ export default function ConfirmOrder({ cartItems, totalAmount }) {
             </TotalAmount>
           </Orders>
 
-          <RestartBtn>Start New Order</RestartBtn>
+          <RestartBtn onClick={handleResetCart}>Start New Order</RestartBtn>
         </article>
       </Content>
     </Container>
@@ -56,7 +59,7 @@ const Content = styled.div`
   width: 100%;
   max-width: 40rem;
   background-color: #fff;
-  max-height: 90%;
+  height: fit-content;
   overflow: initial;
   border-radius: 0.5rem;
   position: relative;

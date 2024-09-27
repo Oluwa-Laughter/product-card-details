@@ -113,9 +113,9 @@ const ProductCard = styled.li`
     }
 
     @media (max-width: 47.5em) {
-      bottom: 20%;
+      bottom: 21%;
       z-index: 999;
-      right: 30%;
+      right: 28%;
     }
 
     img,
@@ -140,12 +140,12 @@ const ProductCard = styled.li`
 
   figure {
     p {
-      font-size: 1.6rem;
+      font-size: 1.4rem;
       color: var(--Rose-300);
     }
 
     h3 {
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       color: var(--Rose-500);
     }
     span {
